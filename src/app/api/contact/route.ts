@@ -52,7 +52,7 @@ export async function POST(req: Request) {
       secure: true,
       auth: {
         user: process.env.SMTP_USER || 'contact@divaitsolutions.com',
-        pass: process.env.SMTP_PASS,
+        pass: process.env.SMTP_PASS || 'Diva@1998',
       },
       connectionTimeout: 10000, // 10 seconds timeout
       tls: {

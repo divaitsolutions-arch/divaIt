@@ -12,37 +12,56 @@ import { cache } from 'react';
 import type { BlogPost } from '@/shared/types/models';
 import type { Discipline, Course, Package } from '@/features/academy/types/models';
 
-// Using React's cache to deduplicate fetch requests if called multiple times in a single server render pass
-// This is exactly how we avoid prop drilling with Server Components!
-
 const fetchOptions = { next: { revalidate: 60 } };
 
+let fallbackData: any = null;
+try {
+  fallbackData = require('@/sanity/fallback.json');
+} catch (e) {
+  console.warn('Fallback data not found, will rely on live Sanity API.');
+}
+
+async function safeFetch<T>(queryKey: string, query: string, params: Record<string, any> = {}): Promise<T> {
+  try {
+    return await client.fetch<T>(query, params, fetchOptions);
+  } catch (error) {
+    console.error(`[Sanity Fallback] Live fetch failed for ${queryKey}. Using fallback data. Error:`, error);
+    if (!fallbackData || !fallbackData[queryKey]) {
+      throw error;
+    }
+    if (params.slug) {
+      return fallbackData[queryKey][params.slug] as T;
+    }
+    return fallbackData[queryKey] as T;
+  }
+}
+
 export const getDisciplines = cache(async (): Promise<Discipline[]> => {
-  return client.fetch<Discipline[]>(getAllDisciplinesQuery, {}, fetchOptions);
+  return safeFetch<Discipline[]>('getAllDisciplinesQuery', getAllDisciplinesQuery);
 });
 
 export const getDisciplineBySlug = cache(async (slug: string): Promise<Discipline | null> => {
-  return client.fetch<Discipline>(getDisciplineBySlugQuery, { slug }, fetchOptions);
+  return safeFetch<Discipline>('getDisciplineBySlugQuery', getDisciplineBySlugQuery, { slug });
 });
 
 export const getIndividualCourses = cache(async (): Promise<Course[]> => {
-  return client.fetch<Course[]>(getAllIndividualCoursesQuery, {}, fetchOptions);
+  return safeFetch<Course[]>('getAllIndividualCoursesQuery', getAllIndividualCoursesQuery);
 });
 
 export const getIndividualCourseBySlug = cache(async (slug: string): Promise<Course | null> => {
-  return client.fetch<Course>(getIndividualCourseBySlugQuery, { slug }, fetchOptions);
+  return safeFetch<Course>('getIndividualCourseBySlugQuery', getIndividualCourseBySlugQuery, { slug });
 });
 
 export const getPackages = cache(async (): Promise<Package[]> => {
-  return client.fetch<Package[]>(getPackagesQuery, {}, fetchOptions);
+  return safeFetch<Package[]>('getPackagesQuery', getPackagesQuery);
 });
 
 export const getAllBlogPosts = cache(async (): Promise<BlogPost[]> => {
-  return client.fetch<BlogPost[]>(getAllBlogPostsQuery, {}, fetchOptions);
+  return safeFetch<BlogPost[]>('getAllBlogPostsQuery', getAllBlogPostsQuery);
 });
 
 export const getBlogPostBySlug = cache(async (slug: string): Promise<BlogPost | null> => {
-  return client.fetch<BlogPost>(getBlogPostBySlugQuery, { slug }, fetchOptions);
+  return safeFetch<BlogPost>('getBlogPostBySlugQuery', getBlogPostBySlugQuery, { slug });
 });
 
 // --- Agency Fetch Functions ---
@@ -56,23 +75,23 @@ import {
 } from '@/sanity/lib/queries';
 
 export const getAllAgencyCaseStudies = cache(async (): Promise<CaseStudyData[]> => {
-  return client.fetch<CaseStudyData[]>(getAllAgencyCaseStudiesQuery, {}, fetchOptions);
+  return safeFetch<CaseStudyData[]>('getAllAgencyCaseStudiesQuery', getAllAgencyCaseStudiesQuery);
 });
 
 export const getAgencyCaseStudyBySlug = cache(async (slug: string): Promise<CaseStudyData | null> => {
-  return client.fetch<CaseStudyData>(getAgencyCaseStudyBySlugQuery, { slug }, fetchOptions);
+  return safeFetch<CaseStudyData>('getAgencyCaseStudyBySlugQuery', getAgencyCaseStudyBySlugQuery, { slug });
 });
 
 export const getAllAgencyServices = cache(async (): Promise<ServiceData[]> => {
-  return client.fetch<ServiceData[]>(getAllAgencyServicesQuery, {}, fetchOptions);
+  return safeFetch<ServiceData[]>('getAllAgencyServicesQuery', getAllAgencyServicesQuery);
 });
 
 export const getAgencyServiceBySlug = cache(async (slug: string): Promise<ServiceData | null> => {
-  return client.fetch<ServiceData>(getAgencyServiceBySlugQuery, { slug }, fetchOptions);
+  return safeFetch<ServiceData>('getAgencyServiceBySlugQuery', getAgencyServiceBySlugQuery, { slug });
 });
 
 export const getAllAgencyPackageGroups = cache(async (): Promise<PromotionalSolutionGroup[]> => {
-  return client.fetch<PromotionalSolutionGroup[]>(getAllAgencyPackageGroupsQuery, {}, fetchOptions);
+  return safeFetch<PromotionalSolutionGroup[]>('getAllAgencyPackageGroupsQuery', getAllAgencyPackageGroupsQuery);
 });
 
 // --- Shared Fetch Functions (Team, Legal) ---
@@ -83,17 +102,16 @@ import {
 } from '@/sanity/lib/queries';
 
 export const getAllTeamMembers = cache(async (): Promise<TeamMember[]> => {
-  return client.fetch<TeamMember[]>(getAllTeamMembersQuery, {}, fetchOptions);
+  return safeFetch<TeamMember[]>('getAllTeamMembersQuery', getAllTeamMembersQuery);
 });
 
 export const getLegalPageBySlug = cache(async (slug: string): Promise<LegalPage | null> => {
-  return client.fetch<LegalPage>(getLegalPageBySlugQuery, { slug }, fetchOptions);
+  return safeFetch<LegalPage>('getLegalPageBySlugQuery', getLegalPageBySlugQuery, { slug });
 });
 
 import type { FAQ } from '@/features/academy/types/models';
 import { getFAQsQuery } from '@/sanity/lib/queries';
 
 export const getAcademyFAQs = cache(async (): Promise<FAQ[]> => {
-  return client.fetch<FAQ[]>(getFAQsQuery, {}, fetchOptions);
+  return safeFetch<FAQ[]>('getFAQsQuery', getFAQsQuery);
 });
-
