@@ -1,0 +1,72 @@
+# ============================================================
+# .gitignore — Diva IT Solution
+# ============================================================
+
+# ─── Dependencies ────────────────────────────────────────────
+node_modules/
+.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# ─── Next.js Build Output ───────────────────────────────────
+.next/
+out/
+build/
+
+# ─── Testing & Coverage ─────────────────────────────────────
+coverage/
+test-results/
+playwright-report/
+blob-report/
+
+# ─── TypeScript ──────────────────────────────────────────────
+*.tsbuildinfo
+next-env.d.ts
+
+# ─── Environment Variables ───────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ─── OS & Editor Artifacts ───────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# VS Code (keep shared settings, ignore personal)
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# JetBrains IDEs
+.idea/
+
+# ─── Debug Logs ──────────────────────────────────────────────
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ─── Platform & Deployment ───────────────────────────────────
+.vercel
+.netlify
+
+# ─── Misc ────────────────────────────────────────────────────
+*.pem
+.turbo
+.cache
+*.log
+
+# ─── AI Agent / Tooling Artifacts ────────────────────────────
+.agents/
+.kilo/
+.gemini/
+skills-lock.json
+
+# ─── Temporary Scripts & Logs ───────────────────────────────
+centralize.js
+fix_imports_order.js
+migrate.js
+lint_output.txt

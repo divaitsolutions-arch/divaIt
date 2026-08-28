@@ -1,0 +1,83 @@
+/* ────────────────────────────────────────────────────────────
+   ACADEMY ANIMATIONS
+   Keyframes and motion utilities specific to the academy
+   feature: hero dashboard, floating cards, course cards.
+──────────────────────────────────────────────────────────── */
+
+/* Floating glass-card animation */
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.float-card { animation: float-gentle 4s ease-in-out infinite; }
+.float-card-delayed { animation: float-gentle 5s ease-in-out 1.5s infinite; }
+.float-card-slow { animation: float-gentle 6s ease-in-out 0.8s infinite; }
+
+/* Urgency pulse dot */
+@keyframes pulse-live {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.8); }
+}
+.pulse-dot { animation: pulse-live 2s ease-in-out infinite; }
+
+/* 3D Laptop Mockup Utilities */
+.preserve-3d { transform-style: preserve-3d; }
+@keyframes laptop-float {
+  0%, 100% { transform: translateY(0) rotateX(2deg); }
+  50% { transform: translateY(-12px) rotateX(0deg); }
+}
+.animate-laptop-float { animation: laptop-float 6s ease-in-out infinite; }
+
+/* Progress bar fill */
+@keyframes progress-fill {
+  from { width: 0%; }
+  to { width: var(--progress-target, 82%); }
+}
+.animate-progress-fill {
+  animation: progress-fill 2s cubic-bezier(0.4, 0, 0.2, 1) 1.8s forwards;
+  width: 0%;
+}
+
+/* Chart bar grow */
+@keyframes bar-grow {
+  from { height: 0%; }
+  to { height: var(--bar-height, 60%); }
+}
+.animate-bar-grow {
+  animation: bar-grow 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  height: 0%;
+}
+
+/* Notification slide in */
+@keyframes notif-slide {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+.animate-notif-slide {
+  animation: notif-slide 0.6s cubic-bezier(0.16, 1, 0.3, 1) 3s forwards;
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+/* Grid animations */
+@keyframes gridIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.grid-fade {
+  animation: gridIn 0.45s cubic-bezier(.22, 1, .36, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .grid-fade { animation: none; }
+  .tab-underline { transition: none !important; }
+}
+
+/* Trending fire emoji warm glow pulse */
+@keyframes emoji-glow {
+  0%, 100% { filter: drop-shadow(0 0 0 rgba(249, 115, 22, 0)); }
+  50% { filter: drop-shadow(0 0 6px rgba(249, 115, 22, 0.5)) drop-shadow(0 0 12px rgba(234, 88, 12, 0.25)); }
+}
+.animate-emoji-glow {
+  display: inline-block;
+  animation: emoji-glow 2.5s ease-in-out infinite;
+}

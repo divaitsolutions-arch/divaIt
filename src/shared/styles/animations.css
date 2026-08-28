@@ -1,0 +1,23 @@
+/* ────────────────────────────────────────────────────────────
+   SHARED ANIMATIONS & VISUAL EFFECTS
+   Cross-domain keyframes and motion utilities used by
+   multiple features (academy, agency, gateway).
+──────────────────────────────────────────────────────────── */
+
+/* FOUC prevention — animated elements start invisible */
+.hero-reveal {
+  opacity: 0;
+}
+
+/* Subtle mesh grid background */
+.mesh-grid {
+  background-image:
+    linear-gradient(rgba(160, 59, 184, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(160, 59, 184, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Mentor marker transition */
+@media (prefers-reduced-motion: reduce) {
+  .mentor-marker { transition: none !important; }
+}

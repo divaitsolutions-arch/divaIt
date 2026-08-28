@@ -1,0 +1,21 @@
+:root {
+  --theme-primary: #5B3A6E;
+  /* unchanged — lum 0.064, 9.23:1 vs white */
+  --theme-secondary: #7A5A8C;
+  /* unchanged — lum 0.133, 5.72:1 vs white */
+  --theme-accent: #6B4E7D;
+  /* unchanged — lum 0.101, 6.97:1 vs white
+                                     Note: primary/secondary/accent are all ~277-278° hue —
+                                     same purple family, differ only in lightness. Likely
+                                     intentional for the gradient use case; flagging in case
+                                     it wasn't, since primary and accent won't read as
+                                     distinct "roles" if used as separate UI elements. */
+  --theme-cta: #B38435;
+  /* Brighter gold for CTA */
+  --theme-cta-hover: #926A29;
+  /* Darker shade for hover */
+  --theme-trust: #4A5D8C;
+  /* unchanged — lum 0.112, 6.49:1 vs white */
+  --theme-hover: #4A2F5A;
+  /* unchanged — lum 0.042, 11.38:1 vs white */
+}

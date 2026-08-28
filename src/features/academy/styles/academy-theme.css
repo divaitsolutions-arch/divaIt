@@ -1,0 +1,16 @@
+[data-brand="academy"] {
+  --theme-primary: #A34840;
+  /* unchanged — lum 0.128, 5.90:1 vs white */
+  --theme-secondary: #7D5A8A;
+  /* unchanged — lum 0.135, 5.67:1 vs white */
+  --theme-accent: #B5713E;
+  /* unchanged — lum 0.220, 3.89:1 vs white (ok for large text/icons only) */
+  --theme-cta: #4C4A94;
+  /* Violet/Blue from logo for CTA */
+  --theme-cta-hover: #3D3B77;
+  /* Darker shade for hover state */
+  --theme-trust: #4C4A94;
+  /* unchanged — lum 0.086, 7.74:1 vs white */
+  --theme-hover: #8A3A33;
+  /* unchanged — lum 0.087, 7.68:1 vs white */
+}

@@ -1,0 +1,169 @@
+@import "tailwindcss";
+@import "../shared/styles/base-theme.css";
+@import "../features/agency/styles/agency-theme.css";
+@import "../features/academy/styles/academy-theme.css";
+@import "../shared/styles/animations.css";
+@import "../features/academy/styles/animations.css";
+@import "../features/agency/styles/animations.css";
+@import "../gateway/styles/animations.css";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme {
+  /* ────────────────────────────────────────────────────────────
+     NEUTRAL — shared base tokens, used across both agency and
+     academy (backgrounds, text, borders, panels). Safe to change
+     globally; affects both sites.
+  ──────────────────────────────────────────────────────────── */
+  --color-ink: #000000;
+  /* Pure Black (Crisp ink) */
+  --color-surface-inverse: #27272a;
+  /* Zinc-800 (Even softer dark background) */
+  --color-paper: #ffffff;
+  /* Pure white */
+  --color-steel: #1E293B;
+  /* Slate-800 (Crisper muted text) */
+  --color-panel: #f8fafc;
+  /* Slate-50 for subtle cards */
+  --color-error: #ef4444;
+  /* Red-500 — form validation, destructive actions */
+  --color-error-soft: rgba(239, 68, 68, 0.1);
+  /* Red-500/10 — error backgrounds */
+
+  /* Custom Typography overrides */
+  --text-base: 1rem;
+  /* 16px */
+  --text-base--line-height: 1.6;
+  --text-sm: 0.9375rem;
+  /* 15px */
+  --text-sm--line-height: 1.5;
+
+
+  /* ────────────────────────────────────────────────────────────
+     SEMANTIC BRAND THEME
+     Tokens that adapt based on [data-brand] (agency or academy)
+  ──────────────────────────────────────────────────────────── */
+  --color-primary: var(--theme-primary);
+  --color-secondary: var(--theme-secondary);
+  --color-accent: var(--theme-accent);
+  --color-cta: var(--theme-cta);
+  --color-trust: var(--theme-trust);
+  --color-primary-hover: var(--theme-hover);
+
+
+
+
+  /* ────────────────────────────────────────────────────────────
+     FLUID TYPOGRAPHY (Generative Clamp Scale)
+     Overrides default Tailwind text sizes for headings to scale
+     smoothly from mobile (320px) to desktop (1280px).
+  ──────────────────────────────────────────────────────────── */
+  --text-xl: clamp(1.125rem, 1.05rem + 0.38vw, 1.25rem);
+  --text-2xl: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+  --text-3xl: clamp(1.5rem, 1.35rem + 0.75vw, 1.875rem);
+  --text-4xl: clamp(1.875rem, 1.65rem + 1.13vw, 2.25rem);
+  --text-5xl: clamp(2.25rem, 1.95rem + 1.5vw, 3rem);
+  --text-6xl: clamp(2.5rem, 2.1rem + 2vw, 3.75rem);
+  --text-7xl: clamp(3rem, 2.4rem + 3vw, 4.5rem);
+  --text-8xl: clamp(3.75rem, 3rem + 3.75vw, 6rem);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+/* Force CSS variable re-evaluation when the brand changes */
+:root,
+[data-brand] {
+  --color-primary: var(--theme-primary);
+  --color-secondary: var(--theme-secondary);
+  --color-accent: var(--theme-accent);
+  --color-cta: var(--theme-cta);
+  --color-trust: var(--theme-trust);
+  --color-primary-hover: var(--theme-hover);
+}
+
+[data-theme="dark"] {
+  --color-ink: #ffffff;
+  /* Pure white */
+  --color-surface-inverse: #f4f4f5;
+  /* Zinc-100 (Softer light background for dark mode) */
+  --color-paper: #05040a;
+  /* Deep space black */
+  --color-steel: #94a3b8;
+  /* Slate-400 */
+  --color-panel: rgba(255, 255, 255, 0.05);
+  /* White/5 for glass panels */
+  --color-error: #f87171;
+  /* Red-400 — slightly softer red for dark backgrounds */
+  --color-error-soft: rgba(248, 113, 113, 0.12);
+  /* Red-400/12 — error backgrounds in dark mode */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-family: var(--font-sans);
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+@layer components {
+
+  /* Utilizing the new fluid typography scale */
+  .hero-heading {
+    @apply font-display text-5xl font-bold leading-[1.05] tracking-tighter;
+  }
+
+  .page-heading {
+    @apply font-display text-4xl font-bold leading-[1.05] tracking-tighter;
+  }
+
+  .section-heading {
+    @apply font-display text-3xl font-bold tracking-tight;
+  }
+
+  .text-helper {
+    @apply text-base font-medium text-ink/80 leading-snug tracking-wide;
+  }
+
+  .quick-fact {
+    @apply flex items-center gap-2.5 text-base font-bold text-ink/90;
+  }
+
+  .bg-brand-glow {
+    @apply absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/5 blur-[120px] rounded-full pointer-events-none;
+  }
+}
+
+/* Stack card styles - backface-visibility for transform acceleration */
+.stack-card {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Hide vertical scrollbar site-wide */
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
